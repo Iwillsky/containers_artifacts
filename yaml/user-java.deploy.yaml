@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"user-java"},"name":"user-java","namespace":"trips"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"user-java"}},"template":{"metadata":{"labels":{"app":"user-java"}},"spec":{"containers":[{"env":[{"name":"SQL_USER","valueFrom":{"secretKeyRef":{"key":"SQL_USER","name":"sqldb"}}},{"name":"SQL_PASSWORD","valueFrom":{"secretKeyRef":{"key":"SQL_PASSWORD","name":"sqldb"}}},{"name":"SQL_SERVER","valueFrom":{"secretKeyRef":{"key":"SQL_SERVER","name":"sqldb"}}},{"name":"SQL_DBNAME","valueFrom":{"secretKeyRef":{"key":"SQL_DBNAME","name":"sqldb"}}}],"image":"registrypdd0071.azurecr.io/user-java:v1","name":"user-java","ports":[{"containerPort":80}]}]}}}}
+  creationTimestamp: "2021-11-10T01:47:05Z"
+  generation: 1
+  labels:
+    app: user-java
+  name: user-java
+  namespace: trips
+  resourceVersion: "99396"
+  uid: 3d7c223e-432e-408d-8d7c-6349c0465ca8
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: user-java
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: user-java
+    spec:
+      containers:
+      - env:
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              key: SQL_USER
+              name: sqldb
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: SQL_PASSWORD
+              name: sqldb
+        - name: SQL_SERVER
+          valueFrom:
+            secretKeyRef:
+              key: SQL_SERVER
+              name: sqldb
+        - name: SQL_DBNAME
+          valueFrom:
+            secretKeyRef:
+              key: SQL_DBNAME
+              name: sqldb
+        image: registrypdd0071.azurecr.io/user-java:v1
+        imagePullPolicy: IfNotPresent
+        name: user-java
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-11-10T01:47:05Z"
+    lastUpdateTime: "2021-11-10T01:47:15Z"
+    message: ReplicaSet "user-java-8ddc7ff45" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2021-11-10T02:52:18Z"
+    lastUpdateTime: "2021-11-10T02:52:18Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

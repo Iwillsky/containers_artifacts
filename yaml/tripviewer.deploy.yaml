@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"tripviewer"},"name":"tripviewer","namespace":"trips"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"tripviewer"}},"template":{"metadata":{"labels":{"app":"tripviewer"}},"spec":{"containers":[{"image":"registrypdd0071.azurecr.io/tripviewer:v1","name":"tripviewer","ports":[{"containerPort":80}]}]}}}}
+  creationTimestamp: "2021-11-09T08:15:08Z"
+  generation: 2
+  labels:
+    app: tripviewer
+  name: tripviewer
+  namespace: trips
+  resourceVersion: "96585"
+  uid: a955f902-95f6-4c29-8771-2369cc62ff79
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: tripviewer
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: tripviewer
+    spec:
+      containers:
+      - image: registrypdd0071.azurecr.io/tripviewer:v1
+        imagePullPolicy: IfNotPresent
+        name: tripviewer
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 2
+  conditions:
+  - lastTransitionTime: "2021-11-09T08:15:08Z"
+    lastUpdateTime: "2021-11-09T08:15:18Z"
+    message: ReplicaSet "tripviewer-5cc7ff6d9f" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2021-11-10T02:23:32Z"
+    lastUpdateTime: "2021-11-10T02:23:32Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 2
+  readyReplicas: 2
+  replicas: 2
+  updatedReplicas: 2
